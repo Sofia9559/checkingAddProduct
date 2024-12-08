@@ -1,25 +1,34 @@
 package tests;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.Duration;
 
 public class FirstTest {
- /*   private static WebDriver driver;
+    private static WebDriver driver;
+    Thread th = new Thread();
 
-   @BeforeAll
-    public static void setUp()
+/*
+   @Before
+    public void setUp()
 
     {
         driver = new ChromeDriver();
-    } */
+    }
+
+ */
 
     @Test
     public void testAdd() throws InterruptedException {
-
-        WebDriver driver = new ChromeDriver();
+        driver = new ChromeDriver();
         String url = "http://localhost:8080/food";
         driver.get(url);
 
@@ -41,6 +50,10 @@ public class FirstTest {
         WebElement save = driver.findElement(By.id("save"));
         save.click();
 
+        {
+            th.sleep(4);
+        }
+
         //Второй шаг
         WebElement add2 = driver.findElement(By.xpath("//button[text()=\"Добавить\"]"));
         add2.click();
@@ -59,8 +72,10 @@ public class FirstTest {
         WebElement save2 = driver.findElement(By.id("save"));
         save2.click();
 
-        Thread th = new Thread();  // очень интересно почему именно тут нужно поспать
-        th.sleep(4);
+        {
+            th.sleep(4);
+        }
+
 
         //Третий шаг
         WebElement add3 = driver.findElement(By.xpath("//button[text()=\"Добавить\"]"));
@@ -99,7 +114,9 @@ public class FirstTest {
         WebElement save4 = driver.findElement(By.id("save"));
         save4.click();
 
-        th.sleep(4);
+        {
+            th.sleep(4);
+        }
 
         //Сброс
         WebElement sandbox = driver.findElement(By.id("navbarDropdown"));
