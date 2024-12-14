@@ -1,31 +1,28 @@
-package tests;
-import org.junit.Before;
+package tests.UI;
+
+import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.Story;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.time.Duration;
 
+@DisplayName("Мой первый UI тест")
 public class FirstTest {
     private static WebDriver driver;
     Thread th = new Thread();
 
-/*
-   @Before
-    public void setUp()
-
-    {
-        driver = new ChromeDriver();
-    }
-
- */
-
+    @DisplayName("Проверка добавления товара в корзину")
+    @Description("Поочередно добавим в корзину фрукты и овощи, активируем и деактивируем чекбокс Экзотический")
+    @Story("Story1")
+    @Owner("Третьякова Софья")
+   // @Severity(value = SeverityLevel.BLOCKER)
     @Test
     public void testAdd() throws InterruptedException {
         driver = new ChromeDriver();
@@ -51,7 +48,7 @@ public class FirstTest {
         save.click();
 
         {
-            th.sleep(4);
+            th.sleep(15);
         }
 
         //Второй шаг
@@ -73,7 +70,7 @@ public class FirstTest {
         save2.click();
 
         {
-            th.sleep(4);
+            th.sleep(15);
         }
 
 
