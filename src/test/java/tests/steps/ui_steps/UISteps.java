@@ -3,6 +3,7 @@ package tests.steps.ui_steps;
 import io.cucumber.java.ru.Допустим;
 import io.cucumber.java.ru.Затем;
 import io.cucumber.java.ru.Тогда;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,6 +18,7 @@ public class UISteps {
     private WebDriverWait wait;
 
     @Допустим("откроем страницу добавления продукта")
+    @Step("Открытие страницы добавления продукта")
     public void openAddProductPage() {
         driver = new ChromeDriver();
         driver.get("http://localhost:8080/food");
@@ -24,7 +26,7 @@ public class UISteps {
     }
 
     @Тогда("добавим продукт {string} типа {string} и установим Exotic в {string}")
-   // @Тогда("добавим продукт {string} типа {string} и установим Exotic в {boolean}")
+    @Step("Добавление продукта {name} типа {type} с exotic = {exotic}")
     public void addItem(String name, String type, String exotic) {
         boolean exoticValue = Boolean.parseBoolean(exotic);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()=\"Добавить\"]"))).click();
@@ -39,6 +41,7 @@ public class UISteps {
     }
 
     @Затем("все продукты должны быть добавлены и сброшены")
+    @Step("Сброс продуктов")
     public void resetProducts() {
         wait.until(ExpectedConditions.elementToBeClickable(By.id("navbarDropdown"))).click();
         wait.until(ExpectedConditions.elementToBeClickable(By.id("reset"))).click();
