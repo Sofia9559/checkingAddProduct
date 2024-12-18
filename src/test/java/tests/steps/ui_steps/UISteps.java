@@ -1,8 +1,6 @@
 package tests.steps.ui_steps;
 
-import io.cucumber.java.ru.Допустим;
-import io.cucumber.java.ru.Затем;
-import io.cucumber.java.ru.Тогда;
+import io.cucumber.java.ru.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -21,7 +19,7 @@ public class UISteps {
     @Step("Открытие страницы добавления продукта")
     public void openAddProductPage() {
         driver = new ChromeDriver();
-        driver.get("http://localhost:8080/food");
+        driver.get("https://qualit.applineselenoid.fvds.ru/food");
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
@@ -40,7 +38,15 @@ public class UISteps {
         wait.until(ExpectedConditions.elementToBeClickable(By.id("save"))).click();
     }
 
-    @Затем("все продукты должны быть добавлены и сброшены")
+    @И("проверим что продукт {string} добавлен в таблицу")
+    @Step("Проверка что продукт добавлен в корзину")
+    public void verifyItemAdded(String itemName) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        boolean isItemPresent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='" + itemName + "']"))) != null;
+        assert isItemPresent : "Элемент " + itemName + " не был добавлен.";
+    }
+
+    @Затем("все продукты должны быть сброшены")
     @Step("Сброс продуктов")
     public void resetProducts() {
         wait.until(ExpectedConditions.elementToBeClickable(By.id("navbarDropdown"))).click();
