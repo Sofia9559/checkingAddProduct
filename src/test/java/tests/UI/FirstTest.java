@@ -1,8 +1,6 @@
 package tests.UI;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Owner;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -20,7 +18,11 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
+
+import static org.openqa.selenium.logging.LogType.BROWSER;
 
 @DisplayName("Мой первый UI тест")
 public class FirstTest {
@@ -44,6 +46,7 @@ public class FirstTest {
 
         initDriver();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        driver.manage().window().maximize();
 
         addItem("Банан", "Фрукт", "true");
         verifyItemAdded("Банан");
@@ -97,12 +100,15 @@ public class FirstTest {
 
     private void initRemoteDriver() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName(properties.getProperty("type.browser"));
-        capabilities.setVersion("109.0");
-        capabilities.setCapability("se:enableVNC", true);
-        capabilities.setCapability("se:enableVideo", false);
+        Map<String, Object> selenoidOptions = new HashMap<>();
+        selenoidOptions.put("browserName", "chrome");
+        selenoidOptions.put("browserVersion", "109.0");
+        selenoidOptions.put("enableVNC", true);
+        selenoidOptions.put("enableVideo", false);
+        capabilities.setCapability("selenoid:options", selenoidOptions);
         try {
-            driver = new RemoteWebDriver(URI.create(properties.getProperty("selenoid.url")).toURL(),capabilities);
+            driver = new RemoteWebDriver(
+                    URI.create(properties.getProperty("selenoid.url")).toURL(), capabilities);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
